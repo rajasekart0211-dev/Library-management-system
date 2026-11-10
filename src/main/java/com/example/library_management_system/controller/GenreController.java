@@ -30,8 +30,8 @@ public class GenreController {
         );
     }
 
-    @GetMapping
-    public ResponseEntity<GenreDTO> getGenresById(@RequestParam Long genreId) throws GenreException {
+    @GetMapping("/{genreId}")
+    public ResponseEntity<GenreDTO> getGenresById(@PathVariable Long genreId) throws GenreException {
         return ResponseEntity.ok().body(
                 genreService.getGenreById(genreId)
         );
@@ -39,7 +39,7 @@ public class GenreController {
 
     @PutMapping("/{genreId}")
     public ResponseEntity<GenreDTO> updategenre(
-            @RequestParam("genreId") Long genreId,
+            @PathVariable("genreId") Long genreId,
             @RequestBody GenreDTO genreDTO) throws GenreException {
         GenreDTO updatedDto = genreService.updateGenre(genreId, genreDTO);
         return ResponseEntity.ok().body(updatedDto);
@@ -47,7 +47,7 @@ public class GenreController {
 
     @DeleteMapping("/{genreId}")
     public ResponseEntity<?> deleteGenre(
-            @PathVariable @RequestParam("/genreId") Long genreId
+            @PathVariable Long genreId
     ) throws GenreException {
         genreService.deleteGenreById(genreId);
         return ResponseEntity.ok().body(
@@ -57,7 +57,7 @@ public class GenreController {
 
     @DeleteMapping("/{genreId}/hard")
     public ResponseEntity<?> hardDeleteGenre(
-            @PathVariable @RequestParam("/genreId") Long genreId
+            @PathVariable Long genreId
     ) throws GenreException {
         genreService.hardDeleteGenre(genreId);
         return ResponseEntity.ok().body(
@@ -79,9 +79,9 @@ public class GenreController {
         );
     }
 
-    @GetMapping("/{id}/book-count")
+    @GetMapping("/{genreId}/book-count")
     public ResponseEntity<Long> getBookCountByGenres(
-            @RequestParam("/id") Long genreId){
+            @PathVariable Long genreId){
         return ResponseEntity.ok().body(
                 genreService.getBookCountByGenres(genreId)
         );
